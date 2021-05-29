@@ -5,7 +5,6 @@ function App() {
   const [score, setScore] = useState(0)
   const [highScore, setHighScore] = useState(0)
   const [clickedImages, setClickedImages] = useState([])
-  const [fade, setFade] = useState(false)
 
 
   let images = [{url: './images/Donald.png', name: 'Donald'},{url: './images/Goofy.png', name: 'Goofy'},{url: './images/Kairi.png', name: 'Kairi'},{url: './images/Riku.png', name: 'Riku'},{url: './images/Roxas.png', name: 'Roxas'},{url: './images/Sora.png', name: 'Sora'},{url: './images/Ventus.png', name: 'Ventus'},{url: './images/Xehanort.png', name: 'Xehanort'},{url: './images/Xemnas.png', name: 'Xemnas'},{url: './images/Xion.png', name: 'Xion'}]
@@ -35,9 +34,7 @@ function App() {
         setHighScore(score)
       }
       setScore(0)
-
-      setFade(true)
-      setTimeout(()=>{setFade(false)},1000)
+      redFade()
 
     } else {
       setClickedImages(clickedImages.concat(image))
@@ -53,8 +50,14 @@ function App() {
       setTimeout(() => {window.location.reload()}, 100)
     }
   }, [score])
+
+  const redFade = () => {
+    let container = document.getElementById("card-container")
+    container.classList.add('fading')
+    setTimeout(()=>{container.classList.add('fading')},1000)
+  }
   
-  images= shuffle(images)
+  images = shuffle(images)
 
   return (
     <div>
@@ -63,7 +66,7 @@ function App() {
         <p>Click on each character, without clicking the same one twice</p>
       </header>
 
-       <div className={(fade ? 'fading' : '') + " card-container"}>
+       <div id="card-container" className="card-container">
         <div onClick={() => {clickImage(images[0])}}><Card image={images[0]}/></div>
         <div onClick={() => {clickImage(images[1])}}><Card image={images[1]}/></div>
         <div onClick={() => {clickImage(images[2])}}><Card image={images[2]}/></div>
